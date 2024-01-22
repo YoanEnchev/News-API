@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import { config as dotenvConfig } from 'dotenv';
 import { home } from './routes/home';
-import { listNews, createNews } from './routes/news';
+import { listNews, createNews, updateNews, deleteNews } from './routes/news';
 import Router from 'koa-router';
 import MongoDBPoolService from './services/MongoDBPoolService';
 import bodyParser from 'koa-bodyparser';
@@ -17,6 +17,8 @@ app.use(router.routes()).use(router.allowedMethods());
 router.get('/', home);
 router.get('/news', listNews);
 router.post('/news', createNews)
+router.patch('/news/:id', updateNews)
+router.delete('/news/:id', deleteNews)
 
 MongoDBPoolService.connect();
 

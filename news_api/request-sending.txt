@@ -1,0 +1,48 @@
+
+CREATE
+
+fetch('http://localhost:3003/news', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify( {
+      title: 'Another News',
+      short_description: 'Another News',
+      text: 'Lorem ipsum'.repeat(100),
+    })
+})
+
+
+
+
+READ
+
+http://localhost:3003/news
+
+
+UPDATE
+
+fetch('http://localhost:3003/news/65ad8c6987b5d64915164fef', {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify( {
+      title: 'Edited News',
+      short_description: 'Edited Description',
+      text: 'Edited Content'.repeat(100),
+    })
+})
+
+
+DELETE
+
+
+fetch('http://localhost:3003/news/65aeda30eafa9d16fd464c9d', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+})
+
