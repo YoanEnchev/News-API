@@ -25,7 +25,9 @@ export const createNews = async (ctx) => {
 };
 
 export const listNews = async (ctx) => {
-  const result: IListNewsServiceResult = await NewsService.getAll();
+  const { sorts, filters } = ctx.request.query;
+
+  const result: IListNewsServiceResult = await NewsService.getAll(sorts, filters);
 
   if (result.status == ServiceOperationStatuses.SUCCESS) {
     ctx.body = result.news;

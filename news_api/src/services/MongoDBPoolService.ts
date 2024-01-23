@@ -33,10 +33,10 @@ class MongoDBPoolService {
             await collection.createIndex({ created_at: 1 });
             await collection.createIndex({ title: 1 });
 
-            console.log('Indexes created successfully');
+            console.log('Index & news collections created successfully.');
         }
         else {
-            console.log('Already exists xx');
+            console.log('News collection already exists.');
         }
 
         this.collections.news = database.collection(newsCollectionName);

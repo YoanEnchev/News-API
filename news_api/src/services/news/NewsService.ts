@@ -3,15 +3,16 @@ import ICreateNewsServiceResult from "./interfaces/ICreateNewsServiceResult";
 import ServiceOperationStatuses from "../common/enums/ServiceOperationStatuses";
 import CreateNewsRequest from "requests/news/CreateNewsRequest";
 import { validate } from "class-validator";
-import Sorts from "../../common/enums/Sorts";
-import { DeleteResult, ObjectId, UpdateResult, WithId } from "mongodb";
+import { DeleteResult, Filter, ObjectId, Sort, UpdateResult, WithId } from "mongodb";
 import News from "models/news/News";
 import NewsInList from "models/news/NewsInList";
 import IListNewsServiceResult from "./interfaces/IListNewsServiceResult";
 import IUpdateNewsServiceResult from "./interfaces/IUpdateNewsServiceResult";
 import UpdateNewsRequest from "requests/news/UpdateNewsRequest";
-import FieldTypes from "common/enums/FieldTypes";
+import FieldTypes from "../../common/enums/FieldTypes";
 import FieldsSpecifications from "common/interfaces/FieldsSpecifications";
+import convertSortStringToSortObject from "../../services/common/helpers/convertSortStringToSortObject";
+import convertFilterStringToFilterObject from "../../services/common/helpers/convertFilterStringToFilterObject";
 
 class NewsService {
 
@@ -29,7 +30,10 @@ class NewsService {
             title: newsRequest.title.trim(),
             short_description: newsRequest.short_description.trim(),
             text: newsRequest.text.trim(),
-            created_at: new Date()
+
+            // Set time to midnight so we store data only about the day of creation.
+            // Allows for combining with multiple fields
+            created_at: new Date(new Date().setHours(0, 0, 0, 0))
         };
 
         try {
@@ -72,32 +76,34 @@ class NewsService {
 
     // sorts is string like: {"title:asc,created_at:desc"}
     // filters is like: {"title":"some phrase",created_at:{minDate:'2024-01-22',maxDate:'2024-01-24'}}
-    async getAll(sorts: string = '', filters: string = ''): Promise<IListNewsServiceResult> {
-
-        const sortsObject: object = JSON.parse(sorts)
-        const filtersObject: object = JSON.parse(filters)
-        
+    async getAll(sortsStr: string = '', filtersStr: string = ''): Promise<IListNewsServiceResult> {
+     
         const fieldsSpecifications: FieldsSpecifications = {
             title: FieldTypes.TEXT,
             created_at: FieldTypes.DATE
         }
 
+        let sortObject: Sort = {};
+        let filterObject: Filter<Document> = {};
+        
+        try {
+            sortObject = convertSortStringToSortObject(sortsStr, ['created_at', 'title']);
+            filterObject = convertFilterStringToFilterObject(filtersStr, fieldsSpecifications);
+        }
+        catch (err) {
+            // TODO: Use better logging for production.
+            console.log(err);
+
+            return {
+                status: ServiceOperationStatuses.ERROR_INTERNAL_ERROR, 
+                errorMessage: err.message
+            };
+        }
+
         try {
             const result: WithId<NewsInList>[] = (await MongoDBPoolService.collections.news
-                .find({
-                    title: {
-                        $regex: new RegExp('nEws', 'i'), // 'i' for case-insensitive search
-                    },
-                    // created_at: {
-                    //     $gte: startDate,  // Date object
-                    //     $lte: endDate
-                    // },
-                })
-                .sort({
-                    // Notice first filter is primary sort, the next one is secondary and etc...
-                    created_at: Sorts.DESC,
-                    title: Sorts.ASC
-                })
+                .find(filterObject)
+                .sort(sortObject)
                 .toArray())
                 .map((item: WithId<News>) => {
                     // Don't show news text content.
