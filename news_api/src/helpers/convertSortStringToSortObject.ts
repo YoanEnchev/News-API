@@ -1,6 +1,6 @@
 // Any exception thrown in this method must be handled by it's caller.
 
-import Sorts from "../../../common/enums/Sorts";
+import Sorts from "../common/enums/Sorts";
 import { Sort } from "mongodb";
 
 export default function convertSortStringToSortObject(sortStr: string, allowedFields: string[]): Sort {

@@ -11,8 +11,8 @@ import IUpdateNewsServiceResult from "./interfaces/IUpdateNewsServiceResult";
 import UpdateNewsRequest from "requests/news/UpdateNewsRequest";
 import FieldTypes from "../../common/enums/FieldTypes";
 import FieldsSpecifications from "common/interfaces/FieldsSpecifications";
-import convertSortStringToSortObject from "../../services/common/helpers/convertSortStringToSortObject";
-import convertFilterStringToFilterObject from "../../services/common/helpers/convertFilterStringToFilterObject";
+import convertSortStringToSortObject from "../../helpers/convertSortStringToSortObject";
+import convertFilterStringToFilterObject from "../../helpers/convertFilterStringToFilterObject";
 
 class NewsService {
 

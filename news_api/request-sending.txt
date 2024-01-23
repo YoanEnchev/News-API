@@ -1,3 +1,6 @@
+You can run there requests in the browser console.
+
+
 
 CREATE
 
@@ -17,6 +20,7 @@ fetch('http://localhost:3003/news', {
 
 
 READ
+Make GET request:
 
 http://localhost:3003/news
 http://localhost:3003/news?sorts={"created_at":"desc","title":"desc"}&filters={"created_at":{"minDate":"01-23-2024","maxDate":"01-30-2024"},"title":{"filterPhrase":"A"}}

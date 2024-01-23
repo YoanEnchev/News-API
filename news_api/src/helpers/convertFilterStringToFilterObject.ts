@@ -1,8 +1,8 @@
 // Any exception thrown in this method must be handled by it's caller.
 
-import FieldTypes from "../../../common/enums/FieldTypes";
-import FieldsSpecifications from "common/interfaces/FieldsSpecifications";
-import { Filter, Document, Sort } from "mongodb";
+import FieldTypes from "../common/enums/FieldTypes";
+import FieldsSpecifications from "../common/interfaces/FieldsSpecifications";
+import { Filter, Document } from "mongodb";
 
 export default function convertFilterStringToFilterObject(filterStr: string, fieldsSpecifications: FieldsSpecifications): Filter<Document> {
 
