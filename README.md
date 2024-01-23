@@ -1,12 +1,13 @@
 ## Description
-Simple news REST API allowing records to be filtered. As a tech stack is uses `Docker`, `MongoDB` and it's `native driver` for `Node.js`, `Koa`, `TypeScript`, `Jest` for testing and `docker-compose` for running the application.
+Simple news REST API allowing records to be filtered and sorted. As a tech stack is uses `Docker`, `MongoDB` and it's `native driver` for `Node.js`, `Koa`, `TypeScript`, `Jest` for testing and `docker-compose` for running the application.
 
 ## Requirements
-* Use the tech stack from above.
+* Use the tech stack mentioned above.
 
-* The news entitiy must contain the following information: `id`, `date`, `title`, `short description`, `text``.
+* The news entitiy must contain the following information: `id`, `date`, `title`, `short description`, `text`.
 
 * All requests and responses should be in JSON.
+
 * Requests validation.
 
 * API results must be sortable by date and/or title.
@@ -30,7 +31,7 @@ https://docs.docker.com/engine/install/
 * Edit the `.env` file and place your credentials.
 
 * Run ```docker-compose up```.
-First time running will take a few minutes of setup. when it's you should see the following messag in the terminal: `Finished building. Server is up.`
+First time running will take a few minutes of setup. When it's you should see the following message in the terminal: `Finished building. Server is up.`
 
 # Start
 
@@ -43,9 +44,11 @@ First time running will take a few minutes of setup. when it's you should see th
 
 ## Preview
 
-* After running the ```docker-compose up``` command and wait for the setup to finish you can access the app on the browser by visiting this url: `http://localhost:3003/`
+* Start the app.
 
-* If you need port changes for the mongo or Node.JS containers modify the `docker-compose.yaml` file.
+* You can access the app on the browser by visiting this url: `http://localhost:3003/`
+
+* If you need port changes for MongoDB or Node.JS containers modify the `docker-compose.yaml` file.
 
 
 ## SSH into the Node.JS container:
