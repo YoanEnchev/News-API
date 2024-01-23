@@ -4,7 +4,6 @@ if [ ! -d "node_modules" ]; then
 fi
 
 
-
 # Wait a few seconds before showing a message that script finished so it doesn't overlap with other messages.
 sleep 3 && 
     echo '..........................................' && pwd && '--'

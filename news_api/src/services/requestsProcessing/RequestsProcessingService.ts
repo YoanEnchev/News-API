@@ -7,6 +7,8 @@ class RequestsProcessingService {
 
         const endTime: number = Date.now();
 
+        // TODO: Maybe implement validation of the length of headers and body parameters to avoid database overload.
+
         const requestProcessing: RequestProcessing = {
             started_at: startTime,
             endpoint: ctx.originalUrl.split('?')[0], // Remove query params if such are presented.
